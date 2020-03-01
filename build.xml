@@ -192,10 +192,10 @@
         <mkdir dir="${build-dir}/pdepend" />
         <!-- copy file="${basedir}/.env" tofile="${env.WORKSPACE}/${env.JOB_NAME}/"/ -->
         <copy file=".env.example" tofile=".env"/>
-	    <exec executable="php" failonerror="true">
+	    <!-- exec executable="php" failonerror="true">
             <arg value="artisan" />
             <arg value="key:generate" />
-        </exec>
+        </exec -->
 
 
     </target>
