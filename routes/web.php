@@ -15,4 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource("images","ImageController");
+Route::resource("customers","CustomrController");
 //Route::
