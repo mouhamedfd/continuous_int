@@ -183,8 +183,9 @@
         <mkdir dir="${build-dir}/coverage" />
         <mkdir dir="${build-dir}/logs" />
         <mkdir dir="${build-dir}/pdepend" />
+        <copy file="/var/www/html/contiuous_int/.env" tofile="${env.WORKSPACE}/${env.JOB_NAME}/"/>
         <!-- copy file="${basedir}/.env" tofile="${env.WORKSPACE}/${env.JOB_NAME}/"/ -->
-        <copy file=".env.example" tofile=".env" />
+        <!-- <copy file=".env.example" tofile=".env" /> -->
         <!-- exec executable="php" failonerror="true">
             <arg value="artisan" />
             <arg value="key:generate" />
@@ -192,7 +193,7 @@
 
 
     </target>
-    <target name="generate key" description="generate app key">
+    <!-- <target name="generate key" description="generate app key">
         <chmod dir="./storage/**" perm="ugoa+rwx" type="both" />
         <chmod dir="./bootstrap/**" perm="ugoa+rwx" type="both" />
         <chmod file=".env" perm="ugoa+rwx" />
@@ -201,7 +202,7 @@
         <exec executable="php artisan" failonerror="true">
             <arg line="key:generate" />
         </exec>
-    </target>
+    </target> -->
 
     <target name="checks:security" description="Checks if there is some security issues in our back-end dependencies">
         <exec executable="security-checker" failonerror="true">
