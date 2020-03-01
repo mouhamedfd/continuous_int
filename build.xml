@@ -191,7 +191,7 @@
         <mkdir dir="${build-dir}/logs" />
         <mkdir dir="${build-dir}/pdepend" />
     </target>
-   <target name="checks:security"
+   <target name="checks:security" depends="composer"
             description="Checks if there is some security issues in our back-end dependencies">
         <exec executable="security-checker" failonerror="true">
             <arg line="security:check composer.lock"/>
