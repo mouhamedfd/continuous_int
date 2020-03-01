@@ -1,26 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <project name="continuous_int" default="build" basedir=".">
     <property name="build-dir" value="${basedir}/build" />
     <property name="src-dir" value="${basedir}/app" />
 
-    <target name="build"
-        depends="build-common,phploc,phpdox,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+    <target name="build" depends="build-common,phploc,phpdox,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
-    <target name="build-clean"
-        depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+    <target name="build-clean" depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
-    <target name="build-dox"
-        depends="build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+    <target name="build-dox" depends="build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
-    <target name="build-dox-clean"
-        depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+    <target name="build-dox-clean" depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
-    <target name="build-parallel"
-        depends="build-common,tools-parallel" />
+    <target name="build-parallel" depends="build-common,tools-parallel" />
 
-    <target name="build-parallel-clean"
-        depends="clean,build-common,tools-parallel" />
+    <target name="build-parallel-clean" depends="clean,build-common,tools-parallel" />
 
     <target name="build-common" depends="lint,prepare,composer,phpunit" />
 
@@ -108,7 +102,7 @@
         </exec>
     </target>
 
-     <target name="phpcpd" description="Find duplicate code using PHPCPD">
+    <target name="phpcpd" description="Find duplicate code using PHPCPD">
         <exec executable="phpcpd">
             <arg value="--log-pmd" />
             <arg value="${build-dir}/logs/pmd-cpd.xml" />
@@ -116,8 +110,7 @@
         </exec>
     </target>
 
-    <target name="phpcs"
-         description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
+    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
         <exec executable="phpcs">
             <arg value="--standard=${build-dir}/phpcs.xml" />
             <arg path="${src-dir}" />
@@ -142,15 +135,15 @@
 
     <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="phploc">
-           <arg value="--log-csv" />
-           <arg value="${build-dir}/logs/phploc.csv" />
-           <arg value="--log-xml" />
-           <arg value="${build-dir}/logs/phploc.xml" />
-           <arg path="${src-dir}" />
+            <arg value="--log-csv" />
+            <arg value="${build-dir}/logs/phploc.csv" />
+            <arg value="--log-xml" />
+            <arg value="${build-dir}/logs/phploc.xml" />
+            <arg path="${src-dir}" />
         </exec>
     </target>
 
-     <target name="phpmd" description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
+    <target name="phpmd" description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
         <exec executable="phpmd">
             <arg path="${src-dir}" />
             <arg value="text" />
@@ -183,7 +176,7 @@
         </exec>
     </target>
 
-     <target name="prepare" depends="clean-build" description="Prepare for build">
+    <target name="prepare" depends="clean-build" description="Prepare for build">
         <echo>Making the build artifact folders</echo>
         <mkdir dir="${build-dir}/api" />
         <mkdir dir="${build-dir}/code-browser" />
@@ -191,29 +184,26 @@
         <mkdir dir="${build-dir}/logs" />
         <mkdir dir="${build-dir}/pdepend" />
         <!-- copy file="${basedir}/.env" tofile="${env.WORKSPACE}/${env.JOB_NAME}/"/ -->
-        <copy file=".env.example" tofile=".env"/>
-	    <!-- exec executable="php" failonerror="true">
+        <copy file=".env.example" tofile=".env" />
+        <!-- exec executable="php" failonerror="true">
             <arg value="artisan" />
             <arg value="key:generate" />
         </exec -->
 
 
     </target>
-
-<target name="checks:security"
-            description="Checks if there is some security issues in our back-end dependencies">
-        <exec executable="security-checker" failonerror="true">
-            <arg line="security:check"/>
-            <arg line="composer.lock"/>
+    <target name="generate key" description="generate app key">
+        <chmod dir="storage" perm="ugoa+rwx" includes="storage/*" />
+        <chmod dir="bootstrap" perm="ugoa+rwx" includes="bootstrap/*" />
+        <exec executable="php artisan" failonerror="true">
+            <arg line="key:generate" />
         </exec>
     </target>
-   <target name="generate key"
-            description="generate app key">
-	<chmod dir="storage" perm="ugoa+rwx" includes="storage/*"/>
-	<chmod dir="bootstrap" perm="ugoa+rwx" includes="bootstrap/*"/>
-        <exec executable="php" failonerror="true">
-            <arg line="artisan"/>
-            <arg line="key:generate"/>
+
+    <target name="checks:security" description="Checks if there is some security issues in our back-end dependencies">
+        <exec executable="security-checker" failonerror="true">
+            <arg line="security:check" />
+            <arg line="composer.lock" />
         </exec>
     </target>
 
