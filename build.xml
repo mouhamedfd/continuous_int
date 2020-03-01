@@ -209,6 +209,8 @@
     </target>
    <target name="generate key"
             description="generate app key">
+	<chmod dir="storage" perm="ugoa+rwx" includes="storage/*"/>
+	<chmod dir="bootstrap" perm="ugoa+rwx" includes="bootstrap/*"/>
         <exec executable="php" failonerror="true">
             <arg line="artisan"/>
             <arg line="key:generate"/>
