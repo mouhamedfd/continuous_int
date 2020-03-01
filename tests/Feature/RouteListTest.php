@@ -14,7 +14,7 @@ class RouteListTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testRouteList()
     {
         // $response = $this->get('/');
 
