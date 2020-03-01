@@ -199,4 +199,20 @@
 
 
     </target>
+
+<target name="checks:security"
+            description="Checks if there is some security issues in our back-end dependencies">
+        <exec executable="security-checker" failonerror="true">
+            <arg line="security:check"/>
+            <arg line="composer.lock"/>
+        </exec>
+    </target>
+   <target name="generate key"
+            description="generate app key">
+        <exec executable="php" failonerror="true">
+            <arg line="artisan"/>
+            <arg line="key:generate"/>
+        </exec>
+    </target>
+
 </project>
