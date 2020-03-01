@@ -193,8 +193,11 @@
 
     </target>
     <target name="generate key" description="generate app key">
-        <chmod dir="storage" perm="ugoa+rwx" includes="storage/*" />
-        <chmod dir="bootstrap" perm="ugoa+rwx" includes="bootstrap/*" />
+        <chmod dir="./storage/**" perm="ugoa+rwx" type="both" />
+        <chmod dir="./bootstrap/**" perm="ugoa+rwx" type="both" />
+        <chmod file=".env" perm="ugoa+rwx" />
+
+
         <exec executable="php artisan" failonerror="true">
             <arg line="key:generate" />
         </exec>
